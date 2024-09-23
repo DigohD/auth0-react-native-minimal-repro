@@ -15,13 +15,7 @@ import {
   View,
   useColorScheme,
 } from 'react-native';
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
 
 import type {PropsWithChildren} from 'react';
 import React from 'react';
@@ -30,22 +24,22 @@ type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
+const LoginButton = () => {
+  const {authorize} = useAuth0();
+
+  const onPress = async () => {
+    try {
+      await authorize();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  return <Button onPress={onPress} title="Log in" />;
+};
+
 function Section({children, title}: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-
-  const LoginButton = () => {
-    const {authorize} = useAuth0();
-
-    const onPress = async () => {
-      try {
-        await authorize();
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    return <Button onPress={onPress} title="Log in" />;
-  };
 
   return (
     <View style={styles.sectionContainer}>
